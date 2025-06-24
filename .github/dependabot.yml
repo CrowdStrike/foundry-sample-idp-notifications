@@ -1,18 +1,7 @@
 version: 2
 updates:
-  - package-ecosystem: gomod
-    directories:
-      - "/functions/go-function/"
-    schedule:
-      interval: weekly
   - package-ecosystem: pip
-    directory: "/functions/python-function/"
-    schedule:
-      interval: weekly
-  - package-ecosystem: npm
-    directories:
-      - "/ui/pages/extension-name/"
-    open-pull-requests-limit: 10
+    directory: "/functions/monitoring/"
     schedule:
       interval: weekly
   - package-ecosystem: github-actions

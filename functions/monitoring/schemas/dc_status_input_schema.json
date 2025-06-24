@@ -1,0 +1,28 @@
+{
+  "properties": {
+    "status": {
+      "items": {
+        "type": "string",
+        "anyOf": [
+          {
+            "const": "status.inactive",
+            "title": "Inactive"
+          },
+          {
+            "const": "status.active",
+            "title": "Active"
+          },
+          {
+            "const": "status.limited-func",
+            "title": "Limited functionnality"
+          }
+        ]
+      },
+      "type": "array",
+      "title": "Status"
+    }
+  },
+  "required": [
+  ],
+  "type": "object"
+}

@@ -1,0 +1,75 @@
+app_id: ""
+name: Falcon IdP Domain and Connector Monitoring
+description: Proactively monitors domain controller coverage, health status, and configuration alongside MFA and IDaaS connector functionality. Delivers notifications when issues are detected to ensure continuous security coverage and authentication service availability.
+logo: ""
+vendor: ""
+vendor_products: []
+use_case: ""
+manifest_version: "2023-05-09"
+ignored:
+    - .+/node_modules$
+    - .+/node_modules/.+
+    - .+/venv$
+    - .+/venv/.+
+ui:
+    homepage: ""
+    extensions: []
+    pages: {}
+    dashboards: {}
+    navigation: {}
+api_integrations: []
+rtr_scripts: []
+collections: []
+auth:
+    scopes:
+        - identity-graphql:write
+        - identity-assessment:read
+        - identity-automation:read
+        - identity-entities:read
+        - identity-entities:write
+        - identity-health:read
+        - identity-timeline:read
+    permissions: {}
+    roles: []
+functions:
+    - id: ""
+      name: monitoring
+      config: null
+      description: Provides monitoring features
+      path: functions/monitoring
+      environment_variables: {}
+      handlers:
+        - name: Get latest identity system notifications
+          description: Provides the latest notifications for IDP
+          method: GET
+          api_path: /identity-notifications
+          payload_type: ""
+          request_schema: schemas/monitor_input_schema.json
+          response_schema: schemas/monitor_output_schema.json
+          workflow_integration:
+            id: e5ed0ffb2fa74467acb33c0d7d8821c3
+            disruptive: false
+            system_action: false
+            tags:
+                - IDP System Notifications
+          permissions: []
+        - name: Get domain controller sensors details
+          description: Provides the details of a sensor configuration installed on a domain controller
+          method: GET
+          api_path: /identity-dc-status
+          payload_type: ""
+          request_schema: schemas/dc_status_input_schema.json
+          response_schema: schemas/dc_status_output_schema.json
+          workflow_integration:
+            id: ""
+            disruptive: false
+            system_action: false
+            tags: []
+          permissions: []
+      language: python
+workflows: []
+parsers: []
+logscale:
+    saved_searches: []
+lookup_files: []
+docs: {}

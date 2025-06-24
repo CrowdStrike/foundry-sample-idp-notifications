@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "properties": {
+    "events": {
+      "items": {
+        "properties": {
+          "connectorStatus": {
+            "type": "string"
+          },
+          "connectorType": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "errorDetails": {
+            "properties": {
+              "message": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "eventSeverity": {
+            "type": "string"
+          },
+          "eventType": {
+            "type": "string"
+          },
+          "notificationEventType": {
+            "type": "string"
+          },
+          "providerType": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "state": {
+            "properties": {
+              "dismissed": {
+                "type": "boolean"
+              },
+              "resolved": {
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "timestamp": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "description": "This generated schema may need tweaking. In particular format fields are attempts at matching workflow field types but may not be correct."
+}

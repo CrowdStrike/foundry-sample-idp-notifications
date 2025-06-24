@@ -1,0 +1,62 @@
+{
+  "properties": {
+    "categories": {
+      "items": {
+        "type": "string",
+        "anyOf": [
+          {
+            "const": "SYSTEM_COVERAGE_NOTIFICATION",
+            "title": "Domain Controller coverage notifications"
+          },
+          {
+            "const": "CONNECTOR_NOTIFICATION",
+            "title": "Connector notifications"
+          }
+        ]
+      },
+      "type": "array",
+      "title": "Notification categories"
+    },
+    "duration": {
+      "type": "string",
+      "anyOf": [
+        {
+          "const": "PT-1H",
+          "title": "Last hour"
+        },
+        {
+          "const": "PT-2H",
+          "title": "Last 2 hours"
+        },
+        {
+          "const": "PT-6H",
+          "title": "Last 6 hours"
+        },
+        {
+          "const": "PT-12H",
+          "title": "Last 12 hours"
+        },
+        {
+          "const": "P-1D",
+          "title": "Last day"
+        },
+        {
+          "const": "P-7D",
+          "title": "Last 7 days"
+        }
+      ]
+    },
+    "notification_status": {
+      "type": "boolean",
+      "title": "Opened notifications",
+      "description": "Opened notifications : true, Dismiss or resolved notifications: false",
+      "default": true
+    }
+  },
+  "required": [
+    "categories",
+    "duration",
+    "notification_status"
+  ],
+  "type": "object"
+}
