@@ -47,7 +47,7 @@ functions:
           request_schema: schemas/monitor_input_schema.json
           response_schema: schemas/monitor_output_schema.json
           workflow_integration:
-            id: e5ed0ffb2fa74467acb33c0d7d8821c3
+            id: ""
             disruptive: false
             system_action: false
             tags:
