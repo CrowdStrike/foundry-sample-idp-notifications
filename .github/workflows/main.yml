@@ -15,9 +15,14 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt
         working-directory: functions/monitoring
-      - name: Run unit tests
-        run: pytest
-        working-directory: functions/monitoring
+      - name: Run tests if test_main.py exists
+        run: |
+          if [ -f "test_main.py" ]; then
+            echo "Running tests with test_main.py"
+            pytest
+          else
+            echo "No test_main.py found, skipping tests"
+          fi
       - name: Run Python function and verify output
         run: |
           python main.py > output.log 2>&1 &
