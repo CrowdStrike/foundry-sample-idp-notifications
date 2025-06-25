@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "properties": {
+    "domain_controllers": {
+      "items": {
+        "properties": {
+          "agent_version": {
+            "type": "string"
+          },
+          "cid": {
+            "type": "string"
+          },
+          "device_id": {
+            "type": "string"
+          },
+          "heartbeat_time": {
+            "type": "integer"
+          },
+          "hostname": {
+            "type": "string"
+          },
+          "idp_policy_id": {
+            "type": "string"
+          },
+          "idp_policy_name": {
+            "type": "string"
+          },
+          "kerberos_config": {
+            "type": "string"
+          },
+          "ldap_config": {
+            "type": "string"
+          },
+          "ldaps_config": {
+            "type": "string"
+          },
+          "local_ip": {
+            "type": "string",
+            "format": "ipv4"
+          },
+          "machine_domain": {
+            "type": "string"
+          },
+          "ntlm_config": {
+            "type": "string"
+          },
+          "os_version": {
+            "type": "string"
+          },
+          "rdp_to_dc_config": {
+            "type": "string"
+          },
+          "smb_to_dc_config": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "status_causes": {
+            "items": {},
+            "type": "array"
+          },
+          "ti_enabled": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "type": "object",
+  "description": "This generated schema may need tweaking. In particular format fields are attempts at matching workflow field types but may not be correct."
+}
