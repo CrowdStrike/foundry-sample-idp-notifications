@@ -1,7 +1,7 @@
 app_id: ""
 name: Falcon IdP Domain and Connector Monitoring
 description: Proactively monitors domain controller coverage, health status, and configuration alongside MFA and IDaaS connector functionality. Delivers notifications when issues are detected to ensure continuous security coverage and authentication service availability.
-logo: ""
+logo: images/logo.png
 vendor: ""
 vendor_products: []
 use_case: ""
