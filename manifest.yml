@@ -4,7 +4,7 @@ description: Proactively monitors domain controller coverage, health status, and
 logo: images/logo.png
 vendor: ""
 vendor_products: []
-use_case: ""
+use_case: Identity & Access
 manifest_version: "2023-05-09"
 ignored:
     - .+/node_modules$
