@@ -112,6 +112,30 @@ This Falcon Foundry application performs scheduled checks against domain control
 * Specific error messages to help with troubleshooting
 * Status indicators (inactive, limited functionality, etc.)
 
+## End-to-End Testing
+
+This app includes E2E tests that verify exposed function actions are available in Fusion SOAR workflows.
+
+### Running E2E Tests Locally
+
+```bash
+cd e2e
+npm ci
+npx playwright install chromium
+cp .env.sample .env
+# Edit .env with your Falcon credentials
+npm test
+```
+
+The tests will:
+1. Install the app
+2. Create a new workflow and verify both exposed actions are available:
+   - "Get latest identity system notifications"
+   - "Get domain controller sensors details"
+3. Uninstall the app
+
+See [e2e/README.md](e2e/README.md) for more details.
+
 ## Foundry resources
 
 - Foundry documentation: [US-1](https://falcon.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry) | [US-2](https://falcon.us-2.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry) | [EU](https://falcon.eu-1.crowdstrike.com/documentation/category/c3d64B8e/falcon-foundry)
