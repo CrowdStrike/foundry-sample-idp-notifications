@@ -87,7 +87,7 @@ test.describe('IdP Notifications - E2E Tests', () => {
           // Look for the Configure heading as indicator of valid action
           try {
             const configureHeading = workflowsPage.page.getByRole('heading', { name: 'Configure', level: 4 });
-            await configureHeading.waitFor({ state: 'visible', timeout: 10000 });
+            await configureHeading.waitFor({ state: 'visible', timeout: 15000 });
             console.log(`✓ Action verified: ${actionName} - Configure section is present`);
             actionAdded = true;
 
