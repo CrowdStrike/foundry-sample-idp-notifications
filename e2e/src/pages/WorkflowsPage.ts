@@ -39,8 +39,9 @@ export class WorkflowsPage extends BasePage {
         await menuButton.click();
         await this.page.waitForLoadState('networkidle');
 
-        // Click Fusion SOAR in the navigation menu (not the home page cards)
-        const navigation = this.page.locator('nav, [role="navigation"]');
+        // Click Fusion SOAR button in the navigation menu (not the content buttons)
+        // Look for the navigation and find the exact "Fusion SOAR" button (not content that mentions Fusion SOAR)
+        const navigation = this.page.getByRole('navigation');
         const fusionSoarButton = navigation.getByRole('button', { name: 'Fusion SOAR', exact: true });
         await fusionSoarButton.click();
 
