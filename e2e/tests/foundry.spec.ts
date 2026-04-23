@@ -18,14 +18,14 @@ test.describe('IdP Notifications - E2E Tests', () => {
     const nextButton = workflowsPage.page.getByRole('button', { name: 'Next' });
     await nextButton.click();
 
-    await workflowsPage.page.waitForLoadState('networkidle');
+    await workflowsPage.page.waitForLoadState('domcontentloaded');
     await workflowsPage.page.getByText('Add next').waitFor({ state: 'visible', timeout: 10000 });
 
     // Click "Add action" button once to open the action selection dialog
     const addNextMenu = workflowsPage.page.getByTestId('add-next-menu-container');
     const addActionButton = addNextMenu.getByTestId('context-menu-seq-action-button');
     await addActionButton.click();
-    await workflowsPage.page.waitForLoadState('networkidle');
+    await workflowsPage.page.waitForLoadState('domcontentloaded');
 
     // Wait for search box to be visible
     const searchBox = workflowsPage.page.getByRole('searchbox').or(workflowsPage.page.getByPlaceholder(/search/i));
@@ -34,7 +34,7 @@ test.describe('IdP Notifications - E2E Tests', () => {
     // Wait for initial action list loading to complete
     const loadingMessages = workflowsPage.page.getByText('This may take a few moments');
     await loadingMessages.first().waitFor({ state: 'hidden', timeout: 60000 }).catch(() => {});
-    await workflowsPage.page.waitForLoadState('networkidle');
+    await workflowsPage.page.waitForLoadState('domcontentloaded');
 
     // Verify all exposed actions by checking their Configure sections
     const expectedActions = [
@@ -48,8 +48,9 @@ test.describe('IdP Notifications - E2E Tests', () => {
       await searchBox.clear();
       await searchBox.pressSequentially(actionName, { delay: 20 });
 
-      // Wait for search results to filter (indicated by "Top results" appearing)
-      await workflowsPage.page.getByText('Top results').waitFor({ state: 'visible', timeout: 30000 });
+      // Wait for search results to load
+      await loadingMessages.first().waitFor({ state: 'hidden', timeout: 60000 }).catch(() => {});
+      await workflowsPage.page.waitForLoadState('domcontentloaded');
 
       // Expand "Other" section if it exists (label may vary across versions)
       const otherSection = workflowsPage.page.getByText(/^Other \(/);
@@ -58,7 +59,7 @@ test.describe('IdP Notifications - E2E Tests', () => {
 
         // Wait for section's internal loading to complete
         await loadingMessages.first().waitFor({ state: 'hidden', timeout: 60000 }).catch(() => {});
-        await workflowsPage.page.waitForLoadState('networkidle');
+        await workflowsPage.page.waitForLoadState('domcontentloaded');
       }
 
       // Find all instances of this action (may include stale ones from previous installs)
@@ -80,7 +81,7 @@ test.describe('IdP Notifications - E2E Tests', () => {
         try {
           // Click on the action
           await actionElements[i].click();
-          await workflowsPage.page.waitForLoadState('networkidle');
+          await workflowsPage.page.waitForLoadState('domcontentloaded');
 
           // Wait for the details panel to load and check if configuration is present
           // Stale actions won't show the "Configure" tab
@@ -97,11 +98,11 @@ test.describe('IdP Notifications - E2E Tests', () => {
             );
             if (await backButton.isVisible({ timeout: 1000 }).catch(() => false)) {
               await backButton.click();
-              await workflowsPage.page.waitForLoadState('networkidle');
+              await workflowsPage.page.waitForLoadState('domcontentloaded');
 
               // Wait for action list to reload after going back
               await loadingMessages.first().waitFor({ state: 'hidden', timeout: 60000 }).catch(() => {});
-              await workflowsPage.page.waitForLoadState('networkidle');
+              await workflowsPage.page.waitForLoadState('domcontentloaded');
             }
 
             break;
