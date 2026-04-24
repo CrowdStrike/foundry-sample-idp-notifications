@@ -45,14 +45,14 @@ test.describe('IdP Notifications - E2E Tests', () => {
     for (const actionName of expectedActions) {
       // Search for the specific action
       await expect(searchBox).toBeEnabled({ timeout: 10000 });
-      await searchBox.fill(actionName);
+      await searchBox.clear();
+      await searchBox.pressSequentially(actionName, { delay: 20 });
 
-      // Wait for search results to load
-      await loadingMessages.first().waitFor({ state: 'hidden', timeout: 60000 }).catch(() => {});
-      await workflowsPage.page.waitForLoadState('networkidle');
+      // Wait for search results to filter (indicated by "Top results" appearing)
+      await workflowsPage.page.getByText('Top results').waitFor({ state: 'visible', timeout: 30000 });
 
-      // Expand "Other (Custom, Foundry, etc.)" section if it exists
-      const otherSection = workflowsPage.page.getByText('Other (Custom, Foundry, etc.)');
+      // Expand "Other" section if it exists (label may vary across versions)
+      const otherSection = workflowsPage.page.getByText(/^Other \(/);
       if (await otherSection.isVisible({ timeout: 2000 }).catch(() => false)) {
         await otherSection.click();
 
