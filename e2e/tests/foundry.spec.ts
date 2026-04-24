@@ -48,9 +48,8 @@ test.describe('IdP Notifications - E2E Tests', () => {
       await searchBox.clear();
       await searchBox.pressSequentially(actionName, { delay: 20 });
 
-      // Wait for search results to load
-      await loadingMessages.first().waitFor({ state: 'hidden', timeout: 60000 }).catch(() => {});
-      await workflowsPage.page.waitForLoadState('domcontentloaded');
+      // Wait for search results to filter (indicated by "Top results" appearing)
+      await workflowsPage.page.getByText('Top results').waitFor({ state: 'visible', timeout: 30000 });
 
       // Expand "Other" section if it exists (label may vary across versions)
       const otherSection = workflowsPage.page.getByText(/^Other \(/);
