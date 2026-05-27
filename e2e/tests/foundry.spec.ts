@@ -46,6 +46,10 @@ test.describe('IdP Notifications - E2E Tests', () => {
       // Search for the specific action
       await expect(searchBox).toBeEnabled({ timeout: 10000 });
       await searchBox.clear();
+
+      // Wait for previous search results to clear before typing new search
+      await workflowsPage.page.getByText('Top results').waitFor({ state: 'hidden', timeout: 10000 }).catch(() => {});
+
       await searchBox.pressSequentially(actionName, { delay: 20 });
 
       // Wait for search results to filter (indicated by "Top results" appearing)
@@ -62,8 +66,8 @@ test.describe('IdP Notifications - E2E Tests', () => {
       }
 
       // Find all instances of this action (may include stale ones from previous installs)
-      // Use exact: false to be more flexible with matching
-      const actionElements = await workflowsPage.page.getByText(actionName, { exact: false }).all();
+      // Use radio role to match only action cards, not parent containers
+      const actionElements = await workflowsPage.page.getByRole('radio', { name: new RegExp(actionName, 'i') }).all();
 
       if (actionElements.length === 0) {
         throw new Error(`Action '${actionName}' not found in search results`);
@@ -78,17 +82,16 @@ test.describe('IdP Notifications - E2E Tests', () => {
         console.log(`  Trying instance ${i + 1}/${actionElements.length}...`);
 
         try {
-          // Click on the action
-          await actionElements[i].click();
+          // Click on the action (force: true bypasses card overlay intercepting pointer events)
+          await actionElements[i].click({ force: true });
           await workflowsPage.page.waitForLoadState('domcontentloaded');
 
           // Wait for the details panel to load and check if configuration is present
-          // Stale actions won't show the "Configure" tab
-          // Look for the Configure tab as indicator of valid action
+          // Stale actions only show "Execution settings" tab; valid actions have "Configure" tab
           try {
             const configureTab = workflowsPage.page.getByRole('tab', { name: 'Configure' });
-            await configureTab.waitFor({ state: 'visible', timeout: 15000 });
-            console.log(`✓ Action verified: ${actionName} - Configure section is present`);
+            await configureTab.waitFor({ state: 'visible', timeout: 5000 });
+            console.log(`✓ Action verified: ${actionName} - Configure tab is present`);
             actionAdded = true;
 
             // Close the dialog to prepare for next action
@@ -108,6 +111,13 @@ test.describe('IdP Notifications - E2E Tests', () => {
           } catch (error) {
             const errorMsg = error.message || 'Unknown error';
             console.log(`  Instance ${i + 1} failed: ${errorMsg}`);
+
+            // Go back to search results so next instance is clickable
+            const backBtn = workflowsPage.page.getByRole('button', { name: 'Back' });
+            if (await backBtn.isVisible({ timeout: 1000 }).catch(() => false)) {
+              await backBtn.click();
+              await workflowsPage.page.waitForLoadState('domcontentloaded');
+            }
           }
         } catch (error) {
           console.log(`  Instance ${i + 1} failed: ${error.message}, trying next...`);
