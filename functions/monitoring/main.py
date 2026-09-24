@@ -213,8 +213,7 @@ def get_dc_status(request: Request, _config: Optional[Dict[str, object]] = None)
                 )
 
             # Add device IDs to our list
-            device_ids = response["body"]["resources"]
-            all_device_ids.append(device_ids)
+            all_device_ids.extend(response["body"]["resources"])
 
             # Check if we need to paginate
             pagination = response["body"]["meta"]["pagination"]
@@ -226,8 +225,8 @@ def get_dc_status(request: Request, _config: Optional[Dict[str, object]] = None)
 
         all_device_details = []
 
-        for i in range(0, len(device_ids), BATCH_SIZE):
-            batch = device_ids[i:i+BATCH_SIZE]
+        for i in range(0, len(all_device_ids), BATCH_SIZE):
+            batch = all_device_ids[i:i+BATCH_SIZE]
 
             response = falcon.get_sensor_details(ids=batch)
 
@@ -243,7 +242,7 @@ def get_dc_status(request: Request, _config: Optional[Dict[str, object]] = None)
                 )
 
             # Add device details to our list
-            all_device_details.append(response["body"]["resources"])
+            all_device_details.extend(response["body"]["resources"])
 
         return Response(
             body={
