@@ -162,7 +162,7 @@ fragment MinimalEntityDescriptor on Entity {
             code=200,
         )
 
-    except (ValueError, KeyError, AttributeError, TypeError, IndexError) as e:
+    except Exception as e:  # pylint: disable=broad-except
         return Response(
             code=500,
             errors=[APIError(code=500, message=f"Internal server error: {str(e)}")],
@@ -252,7 +252,7 @@ def get_dc_status(request: Request, _config: Optional[Dict[str, object]] = None)
             code=200,
         )
 
-    except (ValueError, KeyError, AttributeError, TypeError, IndexError) as e:
+    except Exception as e:  # pylint: disable=broad-except
         return Response(
             code=500,
             errors=[APIError(code=500, message=f"Internal server error: {str(e)}")],
