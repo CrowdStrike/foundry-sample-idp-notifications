@@ -1,7 +1,9 @@
 version: 2
 updates:
   - package-ecosystem: pip
-    directory: "/functions/monitoring/"
+    directories:
+      - "/.github"
+      - "/functions/monitoring/"
     schedule:
       interval: "weekly"
       day: "monday"
