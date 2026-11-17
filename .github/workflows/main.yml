@@ -16,7 +16,7 @@ jobs:
           python-version: '3.14'
           cache: 'pip'
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt -r ../../.github/requirements-dev.txt
         working-directory: functions/monitoring
       - name: Run tests if test_main.py exists
         run: |
